@@ -1,0 +1,718 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Survived Success — A Podcast by Lasting Co.</title>
+<meta name="description" content="Real conversations with leaders who built something significant — and are honest enough to talk about what it took. Hosted by Michael Karel.">
+<meta property="og:title" content="Survived Success — A Podcast by Lasting Co.">
+<meta property="og:description" content="What did it cost you to get there? Real conversations with leaders who built something significant.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://survivedsuccess.com">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,800;1,400;1,600&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #0F1B33;
+    --navy-mid: #1B2A4A;
+    --navy-light: #2A3F6B;
+    --gold: #C9A84C;
+    --gold-light: #D4BA6A;
+    --cream: #F5F0E8;
+    --white: #FFFFFF;
+    --muted: #8899B3;
+    --body: #C8D0DE;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    background: var(--navy);
+    color: var(--body);
+    overflow-x: hidden;
+  }
+
+  /* ─── NAV ─── */
+  nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    padding: 20px 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: rgba(15, 27, 51, 0.9);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(201, 168, 76, 0.15);
+    transition: all 0.4s;
+  }
+
+  nav.scrolled {
+    padding: 14px 40px;
+    background: rgba(15, 27, 51, 0.97);
+  }
+
+  .nav-brand {
+    font-family: 'Playfair Display', serif;
+    font-size: 18px;
+    font-weight: 700;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--white);
+    text-decoration: none;
+  }
+
+  .nav-brand span { color: var(--gold); }
+
+  .nav-links {
+    display: flex;
+    gap: 32px;
+    list-style: none;
+  }
+
+  .nav-links a {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 16px;
+    font-weight: 500;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--muted);
+    text-decoration: none;
+    transition: color 0.3s;
+  }
+
+  .nav-links a:hover { color: var(--gold); }
+
+  /* ─── HERO ─── */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+    padding: 120px 40px 80px;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 120% 50% at 20% 90%, rgba(27, 42, 74, 0.9) 0%, transparent 70%),
+      radial-gradient(ellipse 100% 40% at 60% 85%, rgba(20, 35, 65, 0.7) 0%, transparent 60%),
+      radial-gradient(ellipse 130% 50% at 85% 95%, rgba(25, 40, 70, 0.8) 0%, transparent 65%);
+    z-index: 1;
+  }
+
+  .hero::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at center, transparent 30%, rgba(10, 15, 30, 0.5) 100%);
+    z-index: 2;
+  }
+
+  /* Gold accent line */
+  .hero-accent {
+    position: absolute;
+    left: 40px;
+    top: 0;
+    width: 2px;
+    height: 100%;
+    background: linear-gradient(to bottom, transparent, var(--gold), transparent);
+    z-index: 5;
+    opacity: 0.4;
+  }
+
+  .hero-content {
+    position: relative;
+    z-index: 10;
+    text-align: center;
+    max-width: 800px;
+    animation: fadeUp 1.5s ease forwards;
+  }
+
+  .hero-hook {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(28px, 5vw, 52px);
+    font-style: italic;
+    color: var(--gold);
+    line-height: 1.3;
+    margin-bottom: 24px;
+    opacity: 0;
+    animation: fadeUp 1s ease 0.3s forwards;
+  }
+
+  .hero-sub {
+    font-size: clamp(16px, 2.5vw, 22px);
+    color: var(--muted);
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    font-weight: 500;
+    margin-bottom: 50px;
+    opacity: 0;
+    animation: fadeUp 1s ease 0.6s forwards;
+  }
+
+  .hero-title {
+    margin-bottom: 20px;
+    opacity: 0;
+    animation: fadeUp 1s ease 0.9s forwards;
+  }
+
+  .hero-title img {
+    width: clamp(300px, 50vw, 520px);
+    height: auto;
+    display: block;
+    margin: 0 auto;
+  }
+
+  .hero-rule {
+    width: 80px;
+    height: 2px;
+    background: var(--gold);
+    margin: 30px auto;
+    opacity: 0;
+    animation: ruleExpand 1s ease 1.2s forwards;
+  }
+
+  .hero-desc {
+    font-size: clamp(18px, 2.5vw, 22px);
+    color: var(--body);
+    line-height: 1.7;
+    max-width: 600px;
+    margin: 0 auto 40px;
+    opacity: 0;
+    animation: fadeUp 1s ease 1.4s forwards;
+  }
+
+  .hero-cta {
+    display: inline-block;
+    padding: 16px 48px;
+    border: 1px solid var(--gold);
+    color: var(--gold);
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 18px;
+    font-weight: 600;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    text-decoration: none;
+    transition: all 0.4s;
+    opacity: 0;
+    animation: fadeUp 1s ease 1.6s forwards;
+  }
+
+  .hero-cta:hover {
+    background: var(--gold);
+    color: var(--navy);
+  }
+
+  /* ─── SECTION STYLING ─── */
+  section {
+    padding: 100px 40px;
+    position: relative;
+  }
+
+  .section-inner {
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  .section-label {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 16px;
+  }
+
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(28px, 4vw, 42px);
+    font-weight: 700;
+    color: var(--white);
+    line-height: 1.3;
+    margin-bottom: 30px;
+  }
+
+  .section-text {
+    font-size: 20px;
+    line-height: 1.8;
+    color: var(--body);
+    margin-bottom: 24px;
+  }
+
+  /* ─── ABOUT ─── */
+  #about {
+    background: var(--navy-mid);
+    border-top: 1px solid rgba(201, 168, 76, 0.1);
+    border-bottom: 1px solid rgba(201, 168, 76, 0.1);
+  }
+
+  .about-quote {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(20px, 3vw, 28px);
+    font-style: italic;
+    color: var(--white);
+    line-height: 1.6;
+    padding: 40px 0;
+    border-left: 3px solid var(--gold);
+    padding-left: 30px;
+    margin: 40px 0;
+  }
+
+  .about-quote em { color: var(--gold); font-style: italic; }
+
+  /* ─── HOST ─── */
+  #host {
+    background: var(--navy);
+  }
+
+  .host-layout {
+    display: grid;
+    grid-template-columns: 1fr 1.5fr;
+    gap: 60px;
+    align-items: center;
+  }
+
+  .host-photo {
+    width: 100%;
+    aspect-ratio: 3/4;
+    background: var(--navy-mid);
+    border: 1px solid rgba(201, 168, 76, 0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .host-photo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center top;
+  }
+
+  .host-photo-accent {
+    position: absolute;
+    top: -10px;
+    left: -10px;
+    width: 60px;
+    height: 60px;
+    border-top: 2px solid var(--gold);
+    border-left: 2px solid var(--gold);
+  }
+
+  .host-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 36px;
+    font-weight: 700;
+    color: var(--white);
+    margin-bottom: 8px;
+  }
+
+  .host-title {
+    font-size: 16px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 24px;
+  }
+
+  .host-bio {
+    font-size: 20px;
+    line-height: 1.8;
+    color: var(--body);
+    margin-bottom: 20px;
+  }
+
+  /* ─── QUESTIONS ─── */
+  #questions {
+    background: var(--navy-mid);
+    border-top: 1px solid rgba(201, 168, 76, 0.1);
+    border-bottom: 1px solid rgba(201, 168, 76, 0.1);
+  }
+
+  .questions-grid {
+    display: grid;
+    gap: 0;
+    margin-top: 40px;
+  }
+
+  .question-item {
+    padding: 30px 0;
+    border-bottom: 1px solid rgba(201, 168, 76, 0.1);
+    display: grid;
+    grid-template-columns: 60px 1fr;
+    gap: 24px;
+    align-items: start;
+  }
+
+  .question-item:last-child { border-bottom: none; }
+
+  .question-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 32px;
+    font-weight: 700;
+    color: var(--gold);
+    opacity: 0.6;
+    line-height: 1;
+    padding-top: 4px;
+  }
+
+  .question-text {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(18px, 2.5vw, 24px);
+    font-style: italic;
+    color: var(--white);
+    line-height: 1.5;
+  }
+
+  .question-closer {
+    margin-top: 50px;
+    padding: 40px;
+    background: var(--navy);
+    border-left: 3px solid var(--gold);
+  }
+
+  .question-closer-label {
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 16px;
+  }
+
+  .question-closer-text {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(18px, 2.5vw, 24px);
+    font-style: italic;
+    color: var(--white);
+    line-height: 1.5;
+  }
+
+  /* ─── LISTEN ─── */
+  #listen {
+    background: var(--navy);
+    text-align: center;
+  }
+
+  .listen-platforms {
+    display: flex;
+    justify-content: center;
+    gap: 24px;
+    flex-wrap: wrap;
+    margin-top: 40px;
+  }
+
+  .platform-link {
+    padding: 16px 36px;
+    border: 1px solid rgba(201, 168, 76, 0.3);
+    color: var(--white);
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 17px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    text-decoration: none;
+    transition: all 0.3s;
+  }
+
+  .platform-link:hover {
+    border-color: var(--gold);
+    color: var(--gold);
+    background: rgba(201, 168, 76, 0.05);
+  }
+
+  /* ─── FOOTER ─── */
+  footer {
+    padding: 60px 40px;
+    text-align: center;
+    background: var(--navy);
+    border-top: 1px solid rgba(201, 168, 76, 0.1);
+  }
+
+  .footer-logo {
+    width: 120px;
+    height: auto;
+    margin: 0 auto 20px;
+    display: block;
+    opacity: 0.6;
+    transition: opacity 0.3s;
+  }
+
+  .footer-logo:hover { opacity: 1; }
+
+  .footer-signoff {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px;
+    color: var(--white);
+    margin-bottom: 8px;
+  }
+
+  .footer-signoff span { color: var(--gold); }
+
+  .footer-brand {
+    font-size: 14px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-top: 30px;
+  }
+
+  .footer-brand a {
+    color: var(--muted);
+    text-decoration: none;
+    transition: color 0.3s;
+  }
+
+  .footer-brand a:hover { color: var(--gold); }
+
+  .footer-links {
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+    gap: 24px;
+  }
+
+  .footer-links a {
+    font-size: 14px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--muted);
+    text-decoration: none;
+    transition: color 0.3s;
+  }
+
+  .footer-links a:hover { color: var(--gold); }
+
+  /* ─── ANIMATIONS ─── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes ruleExpand {
+    from { width: 0; opacity: 0; }
+    to { width: 80px; opacity: 1; }
+  }
+
+  .reveal {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+  }
+
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* ─── RESPONSIVE ─── */
+  @media (max-width: 768px) {
+    nav { padding: 16px 24px; }
+    .nav-links { display: none; }
+    section { padding: 60px 24px; }
+    .host-layout { grid-template-columns: 1fr; }
+    .host-photo { max-width: 300px; margin: 0 auto; }
+    .question-item { grid-template-columns: 40px 1fr; gap: 16px; }
+    .question-closer { padding: 24px; }
+    .listen-platforms { flex-direction: column; align-items: center; }
+    .platform-link { width: 100%; max-width: 300px; text-align: center; }
+  }
+
+  /* ─── MOBILE NAV TOGGLE ─── */
+  .nav-toggle {
+    display: none;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 4px;
+  }
+
+  .nav-toggle span {
+    display: block;
+    width: 24px;
+    height: 2px;
+    background: var(--gold);
+    margin: 5px 0;
+    transition: 0.3s;
+  }
+
+  @media (max-width: 768px) {
+    .nav-toggle { display: block; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="nav">
+  <a href="#" class="nav-brand">Survived <span>Success</span></a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#host">Host</a></li>
+    <li><a href="#questions">The Questions</a></li>
+    <li><a href="#listen">Listen</a></li>
+  </ul>
+  <button class="nav-toggle" onclick="document.querySelector('.nav-links').classList.toggle('show')">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-accent"></div>
+  <div class="hero-content">
+    <div class="hero-hook">"What did it cost you to get there?"</div>
+    <div class="hero-sub">That's the question nobody asks.</div>
+    <div class="hero-title">
+      <img src="ss-logo-white.png" alt="Survived Success">
+    </div>
+    <div class="hero-rule"></div>
+    <div class="hero-desc">Real conversations with leaders who built something significant — and are honest enough to talk about what it took.</div>
+    <a href="#listen" class="hero-cta">Listen Now</a>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="section-inner reveal">
+    <div class="section-label">About the Show</div>
+    <div class="section-title">Not a highlight reel. Not a how-to.</div>
+    <div class="section-text">
+      Every achievement has a price. Survived Success is a podcast for leaders who've built something significant — and are honest enough to talk about what it took.
+    </div>
+    <div class="section-text">
+      A real conversation about pressure, sacrifice, identity, and what success actually does to a person. Because the goal was never just to succeed. It was to survive it with the right things still intact.
+    </div>
+    <div class="about-quote">
+      "I see men and women who work hard their whole lives to give their family everything they never had. And somewhere in all that working — <em>they get a little lost.</em>"
+    </div>
+    <div class="section-text">
+      I'm building this because I want my kids to watch me try to get that right. And I think a lot of leaders are quietly asking the same question I am — did I survive my success with the right things still intact?
+    </div>
+  </div>
+</section>
+
+<!-- HOST -->
+<section id="host">
+  <div class="section-inner">
+    <div class="host-layout reveal">
+      <div class="host-photo">
+        <img src="michael-karel.png" alt="Michael Karel — Host of Survived Success">
+        <div class="host-photo-accent"></div>
+      </div>
+      <div>
+        <div class="section-label">Your Host</div>
+        <div class="host-name">Michael Karel</div>
+        <div class="host-title">Founder, The Lasting Company</div>
+        <div class="host-bio">
+          Michael Karel is a senior business leader, founder of Grace and Bread — a nonprofit serving the underprivileged in Memphis, TN — and the creator of Survived Success.
+        </div>
+        <div class="host-bio">
+          He's spent his career watching what success costs people, and his life trying to make sure the cost is worth it. He also hosts Neighbors on the Street, a podcast giving voice to people living on the street.
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- QUESTIONS -->
+<section id="questions">
+  <div class="section-inner reveal">
+    <div class="section-label">Every Episode</div>
+    <div class="section-title">Five questions. One conversation. No script.</div>
+    <div class="section-text">Every guest sits down with the same five questions — because the answers are always different.</div>
+
+    <div class="questions-grid">
+      <div class="question-item">
+        <div class="question-num">01</div>
+        <div class="question-text">"The world would look at what you've built and call it success. What would you call it?"</div>
+      </div>
+      <div class="question-item">
+        <div class="question-num">02</div>
+        <div class="question-text">"Did you have to change who you were to get where you are?"</div>
+      </div>
+      <div class="question-item">
+        <div class="question-num">03</div>
+        <div class="question-text">"What did success cost you that no one sees?"</div>
+      </div>
+      <div class="question-item">
+        <div class="question-num">04</div>
+        <div class="question-text">"If you had to live through that season again — what would you hold onto more tightly?"</div>
+      </div>
+      <div class="question-item">
+        <div class="question-num">05</div>
+        <div class="question-text">"What do you want to be known for — not professionally, but as a person?"</div>
+      </div>
+    </div>
+
+    <div class="question-closer">
+      <div class="question-closer-label">Signature Closer — Every Episode</div>
+      <div class="question-closer-text">"What do you know now that you wish you'd known before the success came?"</div>
+    </div>
+  </div>
+</section>
+
+<!-- LISTEN -->
+<section id="listen">
+  <div class="section-inner reveal">
+    <div class="section-label">Listen</div>
+    <div class="section-title">New episodes coming soon.</div>
+    <div class="section-text" style="text-align: center;">Follow on your preferred platform to be notified at launch.</div>
+    <div class="listen-platforms">
+      <a href="#" class="platform-link">Spotify</a>
+      <a href="#" class="platform-link">Apple Podcasts</a>
+      <a href="#" class="platform-link">YouTube</a>
+      <a href="https://www.linkedin.com/company/survivedsuccess" class="platform-link" target="_blank">LinkedIn</a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <a href="https://lastingco.com" target="_blank">
+    <img src="lasting-co-gold.png" alt="Lasting Co." class="footer-logo">
+  </a>
+  <div class="footer-signoff">I'm Michael Karel. <span>Survive your success — with the right things intact.</span></div>
+  <div class="footer-brand">
+    A podcast by <a href="https://lastingco.com" target="_blank">The Lasting Company</a>
+  </div>
+  <div class="footer-links">
+    <a href="https://www.linkedin.com/company/survivedsuccess" target="_blank">LinkedIn</a>
+    <a href="https://www.linkedin.com/company/lastingco" target="_blank">Lasting Co.</a>
+  </div>
+</footer>
+
+<script>
+// Nav scroll effect
+window.addEventListener('scroll', () => {
+  document.getElementById('nav').classList.toggle('scrolled', window.scrollY > 50);
+});
+
+// Reveal on scroll
+const reveals = document.querySelectorAll('.reveal');
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+    }
+  });
+}, { threshold: 0.15 });
+
+reveals.forEach(el => observer.observe(el));
+</script>
+
+</body>
+</html>
